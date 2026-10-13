@@ -8,6 +8,7 @@
     {% set listing_name = meta.get('listing_name', model.name | upper) %}
     {% set publish = meta.get('publish', true) %}
     {% set secure_objects_only = meta.get('secure_objects_only', false) %}
+    {% set reference_databases = meta.get('reference_databases', []) %}
 
     {# ── 2. Validate required config ────────────────────────────────────────── #}
 
@@ -89,7 +90,7 @@
 
     {# ── 6. Create share and grant objects ──────────────────────────────────── #}
 
-    {{ dbt_snowflake_listings._create_share(share_name, share_objects, secure_objects_only) }}
+    {{ dbt_snowflake_listings._create_share(share_name, share_objects, secure_objects_only, reference_databases) }}
 
     {# ── 7. Create or alter the listing ─────────────────────────────────────── #}
 

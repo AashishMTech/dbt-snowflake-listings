@@ -1,4 +1,4 @@
-{% macro _create_share(share_name, share_objects, secure_objects_only=false) %}
+{% macro _create_share(share_name, share_objects, secure_objects_only=false, reference_databases=[]) %}
     {#
         Creates a share (if not exists) and grants usage on all databases/schemas
         referenced by the share objects, then grants on each object based on its
@@ -8,6 +8,8 @@
             share_name: Name of the share to create
             share_objects: List of dicts with 'database', 'schema', 'name' keys
             secure_objects_only: Whether the share only contains secure objects
+            reference_databases: Other databases referenced by shared views; each gets
+                REFERENCE_USAGE so the views can be granted to the share
     #}
 
     {{ dbt_snowflake_listings._log_action('CREATE', 'SHARE', share_name) }}
@@ -44,6 +46,14 @@
         {{ dbt_snowflake_listings._log_action('GRANT USAGE ON SCHEMA', 'TO SHARE', share_name, sch) }}
         {% call statement('grant_schema_' ~ loop.index, fetch_result=false) %}
             GRANT USAGE ON SCHEMA {{ sch }} TO SHARE {{ share_name }}
+        {% endcall %}
+    {% endfor %}
+
+    {# Grant REFERENCE_USAGE on databases referenced by shared views (must precede object grants) #}
+    {% for db in reference_databases %}
+        {{ dbt_snowflake_listings._log_action('GRANT REFERENCE_USAGE ON DATABASE', 'TO SHARE', share_name, db | upper) }}
+        {% call statement('grant_reference_db_' ~ loop.index, fetch_result=false) %}
+            GRANT REFERENCE_USAGE ON DATABASE {{ db | upper }} TO SHARE {{ share_name }}
         {% endcall %}
     {% endfor %}
 

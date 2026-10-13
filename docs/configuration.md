@@ -13,6 +13,7 @@ Config can be split across the `.sql` config block and the `.yml` schema file
 | `listing_name` | string | no | `model.name \| upper` | Override the listing identifier |
 | `publish` | bool | no | `true` | Publish listing after create/alter |
 | `secure_objects_only` | bool | no | `false` | Share `SECURE_OBJECTS_ONLY` flag |
+| `reference_databases` | list | no | `[]` | Other databases referenced by shared views; granted `REFERENCE_USAGE` to the share |
 
 For external listing config, see [External Listing (Blueprint)](#external-listing-blueprint).
 
@@ -184,6 +185,7 @@ models:
 | `review` | bool | no | `true` | Submit listing for Marketplace Ops review |
 | `comment` | string | no | -- | Comment attached to the listing |
 | `secure_objects_only` | bool | no | `false` | Share `SECURE_OBJECTS_ONLY` flag |
+| `reference_databases` | list | no | `[]` | Other databases referenced by shared views; granted `REFERENCE_USAGE` to the share |
 
 ### Required Manifest Fields
 
