@@ -64,6 +64,7 @@
 
     {# ── 4. Serialize the manifest dict to YAML ────────────────────────────── #}
 
+    {% set listing_manifest = dbt_snowflake_listings._resolve_data_dictionary(listing_manifest, share_objects) %}
     {% set manifest_yaml = dbt_snowflake_listings._serialize_manifest(listing_manifest) %}
 
     {% if execute %}
