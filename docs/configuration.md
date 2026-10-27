@@ -88,6 +88,10 @@ Common optional fields:
 - `data_attributes`
 - `cke_content_protection` (for Cortex Knowledge Extension listings)
 
+`data_dictionary.featured` objects follow the share: when a featured object is not shared under the
+schema written in the manifest but exactly one shared object in the featured database has that name,
+the schema is replaced with the shared one (e.g. a CI run that rebuilds a model into a PR schema).
+
 ---
 
 ## External Listing (Blueprint)
