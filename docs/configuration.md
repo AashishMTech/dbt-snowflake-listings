@@ -91,6 +91,7 @@ Common optional fields:
 `data_dictionary.featured` objects follow the share: when a featured object is not shared under the
 schema written in the manifest but exactly one shared object in the featured database has that name,
 the schema is replaced with the shared one (e.g. a CI run that rebuilds a model into a PR schema).
+`<database>.<schema>.<object>` names in `usage_examples` queries follow the share the same way.
 
 ---
 
